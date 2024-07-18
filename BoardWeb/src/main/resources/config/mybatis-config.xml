@@ -22,7 +22,9 @@
       </dataSource>
     </environment>
   </environments>
+  
   <mappers>
     <mapper resource="com/yedam/mapper/StudentMapper.xml"/>
+        <mapper resource="com/yedam/mapper/BoardMapper.xml"/>
   </mappers>
 </configuration>

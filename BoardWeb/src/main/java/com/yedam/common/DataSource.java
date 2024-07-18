@@ -18,9 +18,7 @@ public class DataSource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		SqlSessionFactory sqlSessionFactory =
-		new SqlSessionFactoryBuilder().build(inputStream);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		return sqlSessionFactory;
 	}
 }
- 
