@@ -2,6 +2,7 @@ package com.yedam.mapper;
 
 import java.util.List;
 
+import com.yedam.common.SearchVO;
 import com.yedam.vo.BoardVO;
 
 // 글 목록, 등록, 수정, 삭제, 단건조회
@@ -11,6 +12,11 @@ public interface BoardMapper {
 
 	List<BoardVO> selectList();
 
+	List<BoardVO> selectListPaging(SearchVO search); // 페이지 정보 -> 5건씩 출력
+	
+	// 페이징 계산하기 위한 전체건수
+	int selectTotalCount(SearchVO search);
+	
 	int insertBoard(BoardVO board);
 
 	int updateBoard(BoardVO board);
