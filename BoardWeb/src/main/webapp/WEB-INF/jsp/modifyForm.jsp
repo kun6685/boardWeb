@@ -2,35 +2,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp"%>
+
 <h3>수정화면(modifyForm.jsp)</h3>
-<%
-BoardVO board = (BoardVO) request.getAttribute("board");
-%>
+<% BoardVO board = (BoardVO) request.getAttribute("board"); %>
+
+${board.boardNo }
+
 <form action="updateBoard.do">
- <input type="hidden" name="bno" value="<%= board.getBoardNo() %>">
+ <input type="hidden" name="bno" value="${board.boardNo }">
 	<table class="table">
 		<thead>
 			<tr>
 				<th class="col-sm-3">글번호</th>
-				<td class="col-sm-3"><%=board.getBoardNo()%></td>
+				<td class="col-sm-3">${board.boardNo }</td>
 				<th class="col-sm-3">조회수</th>
-				<td class="col-sm-3"><%=board.getViewCnt()%></td>
+				<td class="col-sm-3">${board.viewCnt }</td>
 			</tr>
 		</thead>
 
 		<tr>
 			<th>제목</th>
-			<td colspan="5"><input class="form-control" type="text" name="title"></td>
+			<td colspan="5"><input class="form-control" type="text" name="title" value="${board.title }"></td>
 		</tr>
 
 		<tr>
 			<th>내용</th>
-			<td colspan="5"><textarea class="form-control" type="text" name="content"></textarea></td>
+			<td colspan="5"><textarea class="form-control" type="text" name="content">${board.content }</textarea></td>
 		</tr>
 
 		<tr>
 			<th>작성자</th>
-			<td colspan="5"><%=board.getWriter()%></td>
+			<td colspan="5">${board.writer }</td>
 		</tr>
 
 		<tr>

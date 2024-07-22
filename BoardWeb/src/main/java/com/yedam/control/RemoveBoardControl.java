@@ -18,11 +18,14 @@ public class RemoveBoardControl implements Control {
 		try {
 			
 			String bno = req.getParameter("bno");
+			String page = req.getParameter("page");
 			
 			BoardService svc = new BoardServiceImpl();
 			BoardVO board = svc.getBoard(Integer.parseInt(bno));
 			
 			req.setAttribute("board", board);
+			req.setAttribute("page", page);
+			
 			req.getRequestDispatcher("WEB-INF/jsp/removeForm.jsp").forward(req, resp); // 페이지 재지정
 		} catch (ServletException e) {
 			e.printStackTrace();
