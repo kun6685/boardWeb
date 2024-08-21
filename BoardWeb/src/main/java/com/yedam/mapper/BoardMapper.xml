@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.mapper.BoardMapper">
+
+  <sql id="selectCondition">
+  where
+		<choose>
+			<when test="searchCondition == 'T'.toString() ">
+				title like '%'|| #{keyword} ||'%'
+			</when>
+
+			<when test="searchCondition == 'W'.toString() ">
+				writer like '%'|| #{keyword} ||'%'
+			</when>
+
+			<when test="searchCondition == 'TW'.toString() ">
+				title like '%'|| #{keyword} ||'%' OR writer like '%'|| #{keyword} ||'%'
+			</when>
+
+			<otherwise>1 = 1</otherwise>
+		</choose>
+  </sql>
+
+	<select id="selectList" resultType="com.yedam.common.SearchVO">
+		SELECT board_no
+		,title
+		,content
+		,writer
+		,view_cnt
+		,writer_date
+		FROM tbl_board
+		ORDER BY board_no
+	</select>
+
+	<select id="selectBoard" parameterType="int">
+		SELECT board_no
+		,title
+		,content
+		,writer
+		,view_cnt
+		,writer_date
+		,image
+		FROM tbl_board
+		WHERE board_no =
+		#{boardNo}
+		ORDER BY board_no
+	</select>
+
+	<!-- 페이징 목록 -->
+	<select id="selectListPaging" parameterType="int">
+		SELECT b.*
+		FROM (SELECT rownum rn, a.*
+		FROM (SELECT *
+					FROM tbl_board
+					<include refid="selectCondition"></include>
+					ORDER BY board_no) a ) b
+		WHERE b.rn > (#{page} - 1) * 5
+			<![CDATA[
+			and b.rn <= (#{page} * 5)
+			]]>
+	</select>
+
+	<!-- 페이징 계산용 전체건수 -->
+	<select id="selectTotalCount">
+		SELECT COUNT(1)
+		FROM tbl_board
+		where
+		<choose>
+			<when test="searchCondition == 'T'.toString() ">
+				title like '%'|| #{keyword} ||'%'
+			</when>
+
+			<when test="searchCondition == 'W'.toString() ">
+				writer like '%'|| #{keyword} ||'%'
+			</when>
+
+			<when test="searchCondition == 'TW'.toString() ">
+				title like '%'|| #{keyword} ||'%' OR writer like '%'|| #{keyword} ||'%'
+			</when>
+
+			<otherwise>1 = 1</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insertBoard" parameterType="com.yedam.vo.BoardVO">
+		INSERT INTO tbl_board
+		(board_no, title, writer, content, image)
+		VALUES (board_seq.NEXTVAL, #{title},
+		#{writer}, #{content}, #{image})
+	</insert>
+
+	<update id="updateBoard" parameterType="com.yedam.vo.BoardVO">
+		UPDATE tbl_board
+		<set>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="content != null">
+				content = #{content}
+			</if>
+		</set>
+		WHERE board_no = #{boardNo}
+	</update>
+
+	<delete id="deleteBoard" parameterType="com.yedam.vo.BoardVO">
+		DELETE
+		FROM tbl_board
+		WHERE board_no = #{boardNo}
+	</delete>
+
+</mapper>
