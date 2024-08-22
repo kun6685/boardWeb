@@ -1,6 +1,7 @@
 package com.yedam.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yedam.common.SearchVO;
 import com.yedam.vo.BoardVO;
@@ -24,5 +25,11 @@ public interface BoardMapper {
 	int deleteBoard(int boardNo);
 
 	BoardVO selectBoard(int boardNo);
+	
+	List<Map<String, Object>> calendarList();
+	
+	int insertSchedule(BoardVO bvo);
+	
+	int deleteSchedule(BoardVO bvo);
 
 }

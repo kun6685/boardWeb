@@ -1,6 +1,7 @@
 package com.yedam.control;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class AddReplyControl implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		resp.setContentType("text/json;charset=utf-8");
 		String writer = req.getParameter("replyer");
 		String content = req.getParameter("content");
 		String bno = req.getParameter("bno");
@@ -28,6 +29,7 @@ public class AddReplyControl implements Control {
 		rvo.setBoardNo(Integer.parseInt(bno));
 		rvo.setReplyContent(content);
 		rvo.setReplyer(writer);
+		rvo.setReplyDate(new Date());
 
 		ReplyService svc = new ReplyServiceImpl();
 		// retCode: Success, retVal: ReplyVO

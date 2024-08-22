@@ -21,6 +21,7 @@ import com.yedam.control.BoardListControl;
 import com.yedam.control.ChartControl;
 import com.yedam.control.CountByMember;
 import com.yedam.control.DeleteBoard;
+import com.yedam.control.FullCalendar;
 import com.yedam.control.GoogleChart;
 import com.yedam.control.ImageDownLoad;
 import com.yedam.control.LoginControl;
@@ -37,6 +38,8 @@ import com.yedam.control.ScriptControl;
 import com.yedam.control.StudentJson;
 import com.yedam.control.StudentListControl;
 import com.yedam.control.UpdateBoardControl;
+import com.yedam.control.addScheduleControl;
+import com.yedam.control.deleteScheduleControl;
 
 // FrontController 역할은 사용자의 모든 요청을 처리
 // 서블릿 a.do, sample.do
@@ -115,12 +118,21 @@ public class FrontController extends HttpServlet {
 		
 		// 차트페이지
 		map.put("/googleChart.do", new GoogleChart());
+		
+		// fullcalendar 연습
+		map.put("/fullcalendar.do", new FullCalendar());
+		
+		// 일정 등록
+		map.put("/addSchedule.do", new addScheduleControl());
+		
+		// 일정 삭제
+		map.put("/deleteSchedule.do", new deleteScheduleControl());
 	}
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// boardList.do -목록 
-		// addBoard.do  -등록
+		// boardList.do - 목록 
+		// addBoard.do  - 등록
 		String uri = req.getRequestURI(); // URL(http://localhost/BoardWeb/boardList.do) vs URI
 		String context = req.getContextPath();
 		String path = uri.substring(context.length()); // "/boardList.do"

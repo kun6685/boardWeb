@@ -1,4 +1,4 @@
-package com.yedam.vo;
+ package com.yedam.vo;
 
 import java.util.Date;
 

@@ -3,19 +3,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<style>
-div.reply ul {
-	list-style-type: none;
-}
-
-div.reply span {
-	display: inline-block;
-}
-</style>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
 
 <h3>게시판 상세(board.jsp)</h3>
 
 <form action="removeBoard.do">
+
 	<input type="hidden" name="bno" value="${board.boardNo }"> <input
 		type="hidden" name="page" value="${page }">
 	<table class="table">
@@ -73,27 +69,29 @@ div.reply span {
 <div class="container reply">
 	<!-- 등록 -->
 	<div class="header">
-		<input class="col-sm-8" id="content">
-		<button class="col-sm-3" id="addReply">댓글등록</button>
+		<input class="col-sm-6" id="content">
+		<button class="col-sm-2" id="addReply">댓글등록</button>
+		<button class="col-sm-2" id="deleteReply">댓글삭제</button>
 	</div>
 	<!-- 목록 -->
-	<div class="content">
-		<ul id="replyList">
-			<li style="display: none; margin-top: 10px"><span
-				class="col-sm-2">12</span> <span class="col-sm-4">댓글내용</span> <span
-				class="col-sm-2">user02</span> <span class="col-sm-2"><button>삭제</button></span>
-			</li>
-		</ul>
-	</div>
-
-	<!-- 댓글 페이징 -->
-	<div class="footer">
-		<nav aria-label="...">
-			<ul class="pagination">
-			</ul>
-		</nav>
-	</div>
-
+	<table id="example" class="display" style="width: 100%">
+		<thead>
+			<tr>
+				<th>댓글번호</th>
+				<th>댓글내용</th>
+				<th>작성자</th>
+				<th>작성일시</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>댓글번호</th>
+				<th>댓글내용</th>
+				<th>작성자</th>
+				<th>작성일시</th>
+			</tr>
+		</tfoot>
+	</table>
 </div>
 
 <script>
@@ -104,9 +102,61 @@ div.reply span {
 			.addEventListener('click', function(e) {
 				location.href = 'modifyBoard.do?bno=${board.boardNo}';
 			})
+
+	let table = $('#example').DataTable({
+		ajax : 'replyList.do?bno=' + bno,
+		columns : [ 
+			{ data : 'replyNo'}, 
+			{ data : 'replyContent'}, 
+			{ data : 'replyer'}, 
+			{ data : 'replyDate' }
+		],
+		lengthMenu: [
+	    [5, 10, 20, -1],
+	    [5, 10, 20, 'All']
+	  ]
+	});
+	
+	// 댓글등록 이벤트
+$('#addReply').on('click', function() {
+    $.ajax({
+        url: 'addReply.do',
+        data: {
+          replyContent: $('#content').val(),
+          replyer: replyer,
+          bno: bno
+        },
+        dataType: 'json',
+        success: function(result) {
+
+        	let rvo = result.retVal;
+          table.row.add({
+               'replyNo': rvo.replyNo,
+               'replyContent': rvo.replyContent,
+               'replyer': rvo.replyer,
+               'replyDate': rvo.replyDate
+          }).draw(false);
+        	
+          // 입력 필드 비우기
+          $('#content').val('');
+        	
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    }); 
+
+//    table.row.add({
+//        'replyNo': 100,
+//        'replyContent': 'test',
+//        'replyer': 'newbie',
+//        'replyDate': new Date()
+//    }).draw(false);
+});
 </script>
 
 <!-- <script src="js/boardService.js"></script>
      <script src="js/board.js"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="js/boardJquery.js"></script>

@@ -1,6 +1,7 @@
 package com.yedam.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yedam.common.SearchVO;
 import com.yedam.vo.BoardVO;
@@ -17,4 +18,7 @@ public interface BoardService {
 	boolean removeBoard(int boardNo);
 	boolean updateBoard(BoardVO boardVO);
 	BoardVO getBoard(int boardNo);
+	List<Map<String, Object>> fullCalendars();
+	boolean addSchedule(BoardVO board);
+	boolean deleteSchedule(BoardVO board);
 }
