@@ -38,7 +38,7 @@ function showPage() {
 		})
 		// 페이지 로드하면서 목록을 출력
 		let result = JSON.parse(this.response);
-		result.forEach(reply => {
+			result.forEach(reply => {
 			replyList.appendChild(makeRow(reply));
 		});
 		// 실제 데이터 ... 출력

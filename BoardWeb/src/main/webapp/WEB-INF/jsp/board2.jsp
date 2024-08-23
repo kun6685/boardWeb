@@ -12,6 +12,7 @@ div.reply span {
 	display: inline-block;
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <h3>게시판 상세(board.jsp)</h3>
 
@@ -105,7 +106,11 @@ div.reply span {
 			})
 </script>
 
-<!-- <script src="js/boardService.js"></script>
-     <script src="js/board.js"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- 
+<script src="js/boardService.js"></script>
+<script src="js/board.js"></script> 
 <script src="js/boardJquery.js"></script>
+-->
+
+<script src="js/jboard.js"></script>
+<script src="js/jBoardService.js"></script>

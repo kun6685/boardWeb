@@ -3,8 +3,6 @@
  * jquery용 Ajax 사용
  */
 
-console.log('Jquery Start');
-
 function makeRow(elem = {}){
 		let temp = $('#replyList li:eq(0)').clone();
 		temp.attr('data-rno', elem.replyNo);
@@ -20,7 +18,7 @@ function makeRow(elem = {}){
 }
 
 
-let page = 1;
+// let page = 1;
 $.ajax({
 	url: 'replyList.do', // 서버url 호출
 	data: { bno: bno, page: page },
